@@ -1,0 +1,60 @@
+package com.pmf.rzk.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.pmf.rzk.model.BankovniRacun;
+import com.pmf.rzk.model.Clan;
+import com.pmf.rzk.repository.BankovniRacunRepository;
+import com.pmf.rzk.repository.ClanRepository;
+
+@Service
+public class BankaService {
+	
+	@Autowired
+	BankovniRacunRepository bankaRepo;
+
+	@Autowired
+	ClanRepository clanRepo;
+	
+	public BankovniRacun kreirajRacun(Integer idUser, BankovniRacun r) {
+		Optional<Clan> trazeniClan = clanRepo.findById(idUser);
+		if(trazeniClan.isPresent()) {
+			r.setClan(trazeniClan.get());
+			BankovniRacun noviRacun = bankaRepo.save(r);
+			return noviRacun;
+		}
+		return null;
+		
+	}
+	
+	public int proveriStanje(Integer idUser, Integer idAccount) {
+		Optional<BankovniRacun> trazeniRacun = bankaRepo.findById(idAccount);
+		if(trazeniRacun.isPresent() && trazeniRacun.get().getClan().getIdClan() == idUser) {
+			return trazeniRacun.get().getStanje();
+		}
+		return -1;
+	}
+
+	public int azurirajStanje(Integer kolicina, Integer idAccount) {
+		Optional<BankovniRacun> trazeniRacun = bankaRepo.findById(idAccount);
+		if(trazeniRacun.isPresent()) {
+			BankovniRacun racun = trazeniRacun.get();
+			racun.setStanje(racun.getStanje() + kolicina);
+			bankaRepo.save(racun);
+			return racun.getStanje();
+		}
+		return -1;
+	}
+
+	public int proveriStanjePoRacunu(Integer idAccount) {
+		Optional<BankovniRacun> trazeniRacun = bankaRepo.findById(idAccount);
+		if(trazeniRacun.isPresent()) {
+			return trazeniRacun.get().getStanje();
+		}
+		return -1;
+	}
+	
+}

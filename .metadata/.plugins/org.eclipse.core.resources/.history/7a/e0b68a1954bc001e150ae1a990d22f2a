@@ -1,0 +1,8 @@
+package com.pmf.rzk.proxy;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name = "osiguranje-service", url = "localhost:8003")
+public interface OsiguranjeProxy {
+
+}

@@ -1,0 +1,53 @@
+package com.pmf.rzk.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.pmf.rzk.model.Clan;
+import com.pmf.rzk.model.ClanUloga;
+import com.pmf.rzk.model.Uloga;
+import com.pmf.rzk.repository.ClanRepository;
+import com.pmf.rzk.repository.ClanUlogaRepository;
+import com.pmf.rzk.repository.UlogaRepository;
+
+@Service
+public class ClanService {
+
+	@Autowired
+	ClanRepository clanRepo;
+	
+	@Autowired
+	UlogaRepository ulogaRepo;
+	
+	@Autowired 
+	ClanUlogaRepository clanUlogaRepo;
+
+	public boolean login(String username, String password) {
+		Clan c = clanRepo.findByKorisnickoImeAndSifra(username, password);
+		if(c != null)
+			return true;
+		return false;
+	}
+
+	public boolean registracija(Integer idRole, Clan c) {
+		Optional<Uloga> trazenaUloga = ulogaRepo.findById(idRole);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		if(trazenaUloga.isPresent()) {
+			c.setSifra(encoder.encode(c.getSifra()));
+			clanRepo.save(c);
+			
+			ClanUloga nova = new ClanUloga();
+			nova.setClan(c);
+			nova.setUloga(trazenaUloga.get());
+			clanUlogaRepo.save(nova);
+			
+			return true;
+		}
+		
+		return false;
+	}
+}

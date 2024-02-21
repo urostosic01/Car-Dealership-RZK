@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="osiguranje-service">
+		<class>com.pmf.rzk.model.Automobil</class>
+		<class>com.pmf.rzk.model.BankovniRacun</class>
+		<class>com.pmf.rzk.model.Clan</class>
+		<class>com.pmf.rzk.model.ClanUloga</class>
+		<class>com.pmf.rzk.model.Kupovina</class>
+		<class>com.pmf.rzk.model.KupovinaAutomobil</class>
+		<class>com.pmf.rzk.model.Model</class>
+		<class>com.pmf.rzk.model.Osiguranje</class>
+		<class>com.pmf.rzk.model.Proizvodjac</class>
+		<class>com.pmf.rzk.model.Uloga</class>
+	</persistence-unit>
+</persistence>

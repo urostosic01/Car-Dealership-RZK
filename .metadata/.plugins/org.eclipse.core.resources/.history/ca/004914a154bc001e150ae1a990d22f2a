@@ -1,0 +1,5 @@
+package com.pmf.rzk.beans;
+
+public class Osiguranje {
+
+}

@@ -1,0 +1,91 @@
+package com.pmf.rzk.model;
+
+import java.io.Serializable;
+import jakarta.persistence.*;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+/**
+ * The persistent class for the proizvodjac database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Proizvodjac.findAll", query="SELECT p FROM Proizvodjac p")
+public class Proizvodjac implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idProizvodjac;
+
+	private String godOsnivanja;
+
+	private String naziv;
+
+	private String sediste;
+
+	//bi-directional many-to-one association to Model
+	@OneToMany(mappedBy="proizvodjac")
+	@JsonIgnore
+	private List<Model> models;
+
+	public Proizvodjac() {
+	}
+
+	public int getIdProizvodjac() {
+		return this.idProizvodjac;
+	}
+
+	public void setIdProizvodjac(int idProizvodjac) {
+		this.idProizvodjac = idProizvodjac;
+	}
+
+	public String getGodOsnivanja() {
+		return this.godOsnivanja;
+	}
+
+	public void setGodOsnivanja(String godOsnivanja) {
+		this.godOsnivanja = godOsnivanja;
+	}
+
+	public String getNaziv() {
+		return this.naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getSediste() {
+		return this.sediste;
+	}
+
+	public void setSediste(String sediste) {
+		this.sediste = sediste;
+	}
+
+	public List<Model> getModels() {
+		return this.models;
+	}
+
+	public void setModels(List<Model> models) {
+		this.models = models;
+	}
+
+	public Model addModel(Model model) {
+		getModels().add(model);
+		model.setProizvodjac(this);
+
+		return model;
+	}
+
+	public Model removeModel(Model model) {
+		getModels().remove(model);
+		model.setProizvodjac(null);
+
+		return model;
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.pmf.rzk.exception;
+
+public class ProizvodjacNijePronadjenError extends RuntimeException{
+
+}

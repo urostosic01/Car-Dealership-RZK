@@ -1,0 +1,163 @@
+package com.pmf.rzk.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pmf.rzk.beans.Automobil;
+import com.pmf.rzk.beans.BankovniRacun;
+import com.pmf.rzk.beans.Clan;
+import com.pmf.rzk.beans.Kupovina;
+import com.pmf.rzk.beans.KupovinaAutomobil;
+import com.pmf.rzk.beans.Model;
+import com.pmf.rzk.beans.Osiguranje;
+import com.pmf.rzk.beans.Proizvodjac;
+import com.pmf.rzk.proxy.AutoplacProxy;
+import com.pmf.rzk.proxy.BankaProxy;
+import com.pmf.rzk.proxy.ClanProxy;
+import com.pmf.rzk.proxy.OsiguranjeProxy;
+
+@RestController
+public class AutoplacRadnjaRestController {
+	
+	public final int AUTOPLAC_BROJ_RACUNA = 1; 
+	
+	@Autowired
+	AutoplacProxy autoplacProxy;
+	
+	@Autowired
+	ClanProxy clanProxy;
+	
+	@Autowired
+	BankaProxy bankaProxy;
+	
+	@Autowired
+	OsiguranjeProxy osiguranjeProxy;
+	
+	/* RAD SA AUTOPLACEM */
+	
+	@GetMapping("/get-manufacturers")
+	public List<Proizvodjac> getManufacturers() {
+		return autoplacProxy.getManufacturers();
+	}
+	
+	@GetMapping("/get-models/{idManufacturer}")
+	public List<Model> getModels(@PathVariable Integer idManufacturer) {
+		return autoplacProxy.getModels(idManufacturer);
+	}
+	
+	@GetMapping("/get-purchase/{idPurchase}")
+	public Kupovina getPurchase(@PathVariable Integer idPurchase) {
+		return autoplacProxy.getPurchase(idPurchase);
+	}
+	
+	@GetMapping("/get-purchase-car/{idPurchase}") 
+	public List<KupovinaAutomobil> getPurchaseCar(@PathVariable Integer idPurchase) {
+		return autoplacProxy.getPurchaseCar(idPurchase);
+	}
+	
+	@GetMapping("/get-cars")
+	public List<Automobil> getCars() {
+		return autoplacProxy.getCars();
+	}
+	
+	/* RAD SA CLANOM */
+	
+	@GetMapping("/login/{username}/{password}")
+	public boolean login(@PathVariable String username, @PathVariable String password) {
+		return clanProxy.login(username, password);
+	}
+	
+	@PostMapping("/register/{idRole}")
+	public boolean register(@PathVariable Integer idRole, @RequestBody Clan c) {
+		return clanProxy.register(idRole, c);
+	}
+	
+	/* RAD SA BANKOM */
+	
+	@PostMapping("/create-account/{idUser}")
+	public BankovniRacun createBankAccount(@PathVariable Integer idUser, @RequestBody BankovniRacun r) {
+		return bankaProxy.createBankAccount(idUser, r);
+	}
+	
+	@GetMapping("/check-balance/{idUser}/{idAccount}")
+	public int checkBalance(@PathVariable Integer idUser, @PathVariable Integer idAccount) {
+		return bankaProxy.checkBalance(idUser, idAccount);
+	}
+	
+//	@GetMapping("/check-balance-account/{idAccount}")
+//	public int checkBalanceAccount(@PathVariable Integer idAccount) {
+//		return bankaProxy.checkBalanceAccount(idAccount);
+//	}
+	
+	@PutMapping("/update-balance/{kolicina}/{idAccount}")
+	public int updateBalance(@PathVariable Integer kolicina, @PathVariable Integer idAccount) {
+		return bankaProxy.updateBalance(kolicina, idAccount);
+	}
+	
+	/* RAD SA OSIGURANJEM */
+	
+	@GetMapping("/get-insurance/{idUser}")
+	public List<Osiguranje> getInsurance(@PathVariable Integer idUser) {
+		return osiguranjeProxy.getInsurance(idUser);
+	}
+	
+	@PostMapping("/add-insurance/{idUser}/{idCarPurchase}/{yearLength}")
+	public Osiguranje addInsurance( @PathVariable Integer idUser, @PathVariable Integer idCarPurchase, 
+									@PathVariable Integer yearLength, @RequestBody Osiguranje o) {
+		
+		return osiguranjeProxy.addInsurance(idUser, idCarPurchase, yearLength, o);
+	}
+	
+	/* RAD SA KUPOVINOM (BANKA + AUTOPLAC) */
+	
+	@PostMapping("/add-purchase/{idUser}")
+	public Kupovina addPurchase(@PathVariable Integer idUser, @RequestBody Kupovina k) {
+		return autoplacProxy.addPurchase(idUser, k);
+	} 
+	
+	@PostMapping("/add-car-purchase/{idCar}/{idPurchase}")//ako ne radi promeniti nazad u mala slova Kupovinaautomobil
+	public KupovinaAutomobil addCarPurchase (@PathVariable Integer idCar, @PathVariable Integer idPurchase,@RequestBody KupovinaAutomobil k) {
+		return autoplacProxy.addCarPurchase(idCar, idPurchase, k);
+	}
+	
+	@GetMapping("/buy-cars/{idPurchase}/{idAccount}") 
+	public String obaviKupovinu(@PathVariable Integer idPurchase, @PathVariable Integer idAccount) {
+		List<KupovinaAutomobil> listaAutomobila = autoplacProxy.getPurchaseCar(idPurchase);
+		int sumaKupovine = 0;
+		for (KupovinaAutomobil a : listaAutomobila) {
+			sumaKupovine += a.getAutomobil().getCena();
+		}
+		
+		if((bankaProxy.checkBalanceAccount(idAccount) - sumaKupovine) >= 0) {
+			int stanjeProdavac = bankaProxy.updateBalance(sumaKupovine, AUTOPLAC_BROJ_RACUNA);
+			int stanjeKupac = bankaProxy.updateBalance(-sumaKupovine, idAccount);
+			return "Kupovina uspesno obavljena, novo stanje na vasem racunu: " + stanjeKupac;
+		}
+		
+		return "Kupovina nije izvrsena, nemate dovoljno sredstava!";
+		
+	}
+	
+	@GetMapping("/avg-price-year")
+	public double avgPrice() {
+		List<Automobil> sviAutomobili = autoplacProxy.getCars();
+		
+		int sumaCena = 0;
+		int sumaGod = 0;
+		for (Automobil a : sviAutomobili) {
+			sumaCena += a.getCena();
+			sumaGod += a.getGodiste(); 
+		}
+		
+		return 0.0;
+	}
+	
+	
+}

@@ -1,0 +1,10 @@
+spring.application.name=clan-service
+server.port=8001
+spring.config.import=optional:configserver:http://localhost:8888
+
+eureka.client.service-url.defaultZone=http://naming-server:8761/eureka
+
+spring.datasource.url=jdbc:mysql://localhost:3306/rzkautoplac
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

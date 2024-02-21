@@ -1,0 +1,3 @@
+spring.application.name=autoplac-radnja-service
+server.port=8887
+

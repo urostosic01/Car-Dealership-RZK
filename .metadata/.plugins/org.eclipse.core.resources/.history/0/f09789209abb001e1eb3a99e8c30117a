@@ -1,0 +1,50 @@
+package com.pmf.rzk.service;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.pmf.rzk.model.Clan;
+import com.pmf.rzk.model.KupovinaAutomobil;
+import com.pmf.rzk.model.Osiguranje;
+import com.pmf.rzk.repository.ClanRepository;
+import com.pmf.rzk.repository.KupovinaAutoRepository;
+import com.pmf.rzk.repository.OsiguranjeRepository;
+
+@Service
+public class OsiguranjeService {
+
+	@Autowired
+	OsiguranjeRepository osiguranjeRepo;
+
+	@Autowired
+	KupovinaAutoRepository kupovinaAutoRepo;
+	
+	@Autowired
+	ClanRepository clanRepo;
+	
+	public Osiguranje dodajOsiguranjeKupljenomAutu(Integer idUser, Integer idPurchase, Integer yearLength, Osiguranje o) {
+		Optional<KupovinaAutomobil> optKupovina = kupovinaAutoRepo.findById(idPurchase);
+		if(optKupovina.isPresent()) {
+			KupovinaAutomobil kupovina = optKupovina.get();
+			Optional<Clan> vlasnik = clanRepo.findById(idUser);
+			if(vlasnik.isPresent() && kupovina.getKupovina().getClan().getIdClan() == vlasnik.get().getIdClan()) {
+				o.setClan(vlasnik.get());
+				o.setKupovinaautomobil(kupovina);
+				LocalDate datum = LocalDate.now();
+				Date datumPocetka = java.sql.Date.valueOf(datum);
+				o.setDatumPocetka(datum);
+				o.setDatumKraja(o.getDatumPocetka()+);
+				
+			}
+			else {
+				System.out.println("Ne postoji vlasnik za tu kupovinu");
+			}
+			
+		}
+		return null;
+	}
+}

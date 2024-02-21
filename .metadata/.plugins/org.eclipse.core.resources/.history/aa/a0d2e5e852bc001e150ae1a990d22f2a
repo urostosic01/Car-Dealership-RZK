@@ -1,0 +1,47 @@
+package com.pmf.rzk.beans;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+public class BankovniRacun {
+	
+	private int brojRacuna;
+	private int stanje;
+	private String tipRacuna;
+	private Clan clan;
+	
+	public BankovniRacun() {
+	}
+	
+	public BankovniRacun(int brojRacuna, int stanje, String tipRacuna, Clan clan) {
+		super();
+		this.brojRacuna = brojRacuna;
+		this.stanje = stanje;
+		this.tipRacuna = tipRacuna;
+		this.clan = clan;
+	}
+	public int getBrojRacuna() {
+		return brojRacuna;
+	}
+	public void setBrojRacuna(int brojRacuna) {
+		this.brojRacuna = brojRacuna;
+	}
+	public int getStanje() {
+		return stanje;
+	}
+	public void setStanje(int stanje) {
+		this.stanje = stanje;
+	}
+	public String getTipRacuna() {
+		return tipRacuna;
+	}
+	public void setTipRacuna(String tipRacuna) {
+		this.tipRacuna = tipRacuna;
+	}
+	public Clan getClan() {
+		return clan;
+	}
+	public void setClan(Clan clan) {
+		this.clan = clan;
+	}
+}

@@ -1,0 +1,8 @@
+package com.pmf.rzk.beans;
+
+
+public class KupovinaAutomobil {
+	private int kolicina;
+	private Automobil automobil;
+	private Kupovina kupovina;
+}

@@ -1,0 +1,10 @@
+package com.pmf.rzk.exception;
+
+public class ProizvodjacNijePronadjenError extends RuntimeException{
+
+	private static final long serialVersionUID = 7830766064578748829L;
+
+	public ProizvodjacNijePronadjenError(String msg) {
+		super(msg);
+	}
+}

@@ -1,0 +1,42 @@
+package com.pmf.rzk.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.pmf.rzk.model.Clan;
+import com.pmf.rzk.model.KupovinaAutomobil;
+import com.pmf.rzk.model.Osiguranje;
+import com.pmf.rzk.repository.ClanRepository;
+import com.pmf.rzk.repository.KupovinaAutoRepository;
+import com.pmf.rzk.repository.OsiguranjeRepository;
+
+@Service
+public class OsiguranjeService {
+
+	@Autowired
+	OsiguranjeRepository osiguranjeRepo;
+
+	@Autowired
+	KupovinaAutoRepository kupovinaAutoRepo;
+	
+	@Autowired
+	ClanRepository clanRepo;
+	
+	public Osiguranje dodajOsiguranjeKupljenomAutu(Integer idUser, Integer idPurchase, Osiguranje o) {
+		Optional<KupovinaAutomobil> optKupovina = kupovinaAutoRepo.findById(idPurchase);
+		if(optKupovina.isPresent()) {
+			KupovinaAutomobil kupovina
+			Optional<Clan> vlasnik = clanRepo.findById(idUser);
+			if(vlasnik.isPresent() &&) {
+				
+			}
+			else {
+				System.out.println("Ne postoji vlasnik za tu kupovinu");
+			}
+			
+		}
+		return null;
+	}
+}

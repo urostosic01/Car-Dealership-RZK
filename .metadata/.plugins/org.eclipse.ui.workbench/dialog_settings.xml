@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="NewWizardAction">
+	</section>
+	<section name="ImportExportAction">
+		<item key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID" value="org.eclipse.ui.wizards.export.ZipFile"/>
+		<list key="ImportExportPage.STORE_EXPANDED_EXPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
+	</section>
+	<section name="ZipFileExportWizard">
+		<item key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID" value="true"/>
+		<item key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID" value="true"/>
+		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\Uros\Desktop\config-server.zip"/>
+			<item value="C:\Users\Uros\Desktop\naming-server.zip"/>
+			<item value="C:\Users\Uros\Desktop\osiguranje-service.zip"/>
+			<item value="C:\Users\Uros\Desktop\clan-service.zip"/>
+			<item value="C:\Users\Uros\Desktop\banka-service.zip"/>
+			<item value="C:\Users\Uros\Desktopbanka-service.zip"/>
+			<item value="C:\Users\Uros\Desktop\autoplac-service.zip"/>
+			<item value="C:\Users\Uros\Desktop\autoplacservice.zip"/>
+			<item value="C:\Users\Uros\Desktop\autoplac-radnja-service.zip"/>
+			<item value="C:\Users\Uros\Desktop\api-gateway.zip"/>
+			<item value="C:\Users\Uros\Desktop\RZK_projekat_UrosTosic.zip"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.internal.QuickAccess">
+		<item key="org.eclipse.ui.internal.quickaccess.QuickAccessDialogDIALOG_WIDTH" value="450"/>
+		<item key="org.eclipse.ui.internal.quickaccess.QuickAccessDialogDIALOG_HEIGHT" value="506"/>
+		<item key="org.eclipse.ui.internal.quickaccess.QuickAccessDialogDIALOG_USE_PERSISTED_SIZE" value="true"/>
+		<item key="org.eclipse.ui.internal.quickaccess.QuickAccessDialogDIALOG_USE_PERSISTED_LOCATION" value="false"/>
+		<list key="orderedElements">
+		</list>
+		<list key="orderedProviders">
+		</list>
+		<list key="textEntries">
+		</list>
+		<list key="textArray">
+		</list>
+	</section>
+</section>

@@ -1,0 +1,79 @@
+package com.pmf.rzk.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.pmf.rzk.exception.ModelNijePronadjenError;
+import com.pmf.rzk.exception.ProizvodjacNijePronadjenError;
+import com.pmf.rzk.model.Automobil;
+import com.pmf.rzk.model.Clan;
+import com.pmf.rzk.model.Clanuloga;
+import com.pmf.rzk.model.Model;
+import com.pmf.rzk.model.Proizvodjac;
+import com.pmf.rzk.repository.AutomobilRepository;
+import com.pmf.rzk.repository.ClanRepository;
+import com.pmf.rzk.repository.ModelRepository;
+import com.pmf.rzk.repository.ProizvodjacRepository;
+
+@Service
+public class AutoplacService {
+
+	@Autowired
+	ProizvodjacRepository proizvodjacRepo;
+
+	@Autowired
+	ModelRepository modelRepo;
+
+	@Autowired
+	AutomobilRepository automobilRepo;
+
+	@Autowired
+	ClanRepository clanRepo;
+
+	public List<Proizvodjac> getProizvodjaci() {
+		return proizvodjacRepo.findAll();
+	}
+
+	public List<Model> getModeli(Integer idManufacturer) {
+		Proizvodjac trazeni = proizvodjacRepo.findById(idManufacturer).get();
+		if (trazeni == null) {
+			System.out.println("Nepostojeci proizvodjac");
+			throw new ProizvodjacNijePronadjenError("Proizvodjac nije pronadjen! ", idManufacturer.toString());
+		}
+		return modelRepo.findByProizvodjac(trazeni);
+	}
+
+	public boolean dodajAutomobil(Integer idUser, Integer idModel, Automobil a) {
+		Optional<Clan> proveraClana = clanRepo.findById(idUser);
+		Clan admin = null;
+		if (proveraClana.isPresent()) {
+			for (Clanuloga u : proveraClana.get().getClanulogas()) {
+				if (u.getUloga().getIdUloga() == 1 || u.getUloga().getIdUloga() == 2) {
+					admin = proveraClana.get();
+				}
+			}
+		}
+		if (admin != null) {
+			Optional<Model> trazeniModel = modelRepo.findById(idModel);
+			if (trazeniModel.isPresent()) {
+				a.setModel(trazeniModel.get());
+				automobilRepo.save(a);
+				return true;
+			}
+			else {
+				System.out.println("NEPOSTOJECI MODEL!");
+				throw new ModelNijePronadjenError("Model nije pronadjen!", idModel.toString());
+				return false;
+			}
+		}
+		else {
+			System.out.println("Korisnik nije admin!");
+			return false;
+		}
+		
+	}
+
+}

@@ -1,0 +1,43 @@
+package com.pmf.rzk.beans;
+
+
+public class Model {
+	private int idModel;
+	private String naziv;
+	private Proizvodjac proizvodjac;
+	
+	public Model() {
+	}
+
+	public Model(int idModel, String naziv, Proizvodjac proizvodjac) {
+		super();
+		this.idModel = idModel;
+		this.naziv = naziv;
+		this.proizvodjac = proizvodjac;
+	}
+
+	public int getIdModel() {
+		return idModel;
+	}
+
+	public void setIdModel(int idModel) {
+		this.idModel = idModel;
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public Proizvodjac getProizvodjac() {
+		return proizvodjac;
+	}
+
+	public void setProizvodjac(Proizvodjac proizvodjac) {
+		this.proizvodjac = proizvodjac;
+	}	
+
+}

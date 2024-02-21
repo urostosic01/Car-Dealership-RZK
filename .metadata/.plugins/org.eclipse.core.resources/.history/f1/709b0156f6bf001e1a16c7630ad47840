@@ -1,0 +1,10 @@
+package com.pmf.rzk.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.pmf.rzk.model.Clan;
+import com.pmf.rzk.model.Osiguranje;
+
+public interface OsiguranjeRepository extends JpaRepository<Osiguranje, Integer>{
+	Osiguranje findByClan(Clan c);
+}

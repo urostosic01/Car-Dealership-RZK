@@ -1,0 +1,8 @@
+1706559250463	Rename field 'valuta'
+1706631863780	Rename type 'Kupovinaautomobil'
+1706632580063	Rename type 'KupovinaAutomobil'
+1706664679278	Rename local variable 'trazena'
+1706718711488	Rename method 'getPurchaseCar'
+1706718724067	Rename method 'getPurchase'
+1706718737780	Rename method 'getModeli'
+1706718758153	Rename method 'getProizvodjaci'

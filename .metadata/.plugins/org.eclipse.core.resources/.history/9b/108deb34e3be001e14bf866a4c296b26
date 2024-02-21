@@ -1,0 +1,24 @@
+package com.pmf.rzk.exception;
+
+public class ProizvodjacNijePronadjenError extends RuntimeException{
+
+	private static final long serialVersionUID = 1L;
+	private String vrednost;
+
+	public ProizvodjacNijePronadjenError(String vrednost, String msg) {
+		super(msg);
+		this.vrednost = vrednost;
+	}
+	
+	public ProizvodjacNijePronadjenError() {
+		
+	}
+
+	public String getValuta() {
+		return vrednost;
+	}
+
+	public void setValuta(String valuta) {
+		this.vrednost = valuta;
+	}
+}

@@ -1,0 +1,23 @@
+package com.pmf.rzk.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.pmf.rzk.model.Osiguranje;
+import com.pmf.rzk.repository.KupovinaAutoRepository;
+import com.pmf.rzk.repository.OsiguranjeRepository;
+
+@Service
+public class OsiguranjeService {
+
+	@Autowired
+	OsiguranjeRepository osiguranjeRepo;
+
+	@Autowired
+	KupovinaAutoRepository kupovinaAutoRepo;
+	
+	public Osiguranje dodajOsiguranjeKupljenomAutu(Integer idUser, Integer idPurchase, Osiguranje o) {
+		
+		return null;
+	}
+}

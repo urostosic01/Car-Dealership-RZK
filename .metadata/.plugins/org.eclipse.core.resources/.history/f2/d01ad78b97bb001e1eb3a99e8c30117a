@@ -1,0 +1,20 @@
+package com.pmf.rzk.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pmf.rzk.model.Osiguranje;
+import com.pmf.rzk.service.OsiguranjeService;
+
+@RestController
+public class OsiguranjeRestController {
+
+	@Autowired
+	OsiguranjeService osiguranjeService;
+	
+	@PostMapping("/add-insurance")
+	public Osiguranje addInsurance() {
+		return osiguranjeService.dodajOsiguranjeKupljenomAutu();
+	}
+}

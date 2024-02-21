@@ -1,0 +1,48 @@
+package com.pmf.rzk.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pmf.rzk.model.Automobil;
+import com.pmf.rzk.model.KupovinaAutomobil;
+import com.pmf.rzk.model.Model;
+import com.pmf.rzk.model.Proizvodjac;
+import com.pmf.rzk.service.AutoplacService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@Validated
+public class AutoplacRestController {
+
+	@Autowired
+	AutoplacService autoplacService;
+	
+	@GetMapping("/get-manufacturers")
+	public List<Proizvodjac> getManufacturers() {
+		return autoplacService.getProizvodjaci();
+	}
+	
+	@GetMapping("/get-models/{idManufacturer}")
+	public List<Model> getModels(@PathVariable Integer idManufacturer) {
+		return autoplacService.getModeli(idManufacturer);
+	}
+	
+	
+	@PostMapping("/add-car/{idUser}/{idModel}") 
+	public boolean addCar(@PathVariable Integer idUser, @PathVariable Integer idModel, @Valid @RequestBody Automobil a) {
+		return autoplacService.dodajAutomobil(idUser, idModel, a);
+	}
+	
+	@PostMapping("/add-car-purchase/{idCar}/{idPurchase}")
+	public KupovinaAutomobil addCarPurchase (@PathVariable Integer idCar, @PathVariable Integer idPurchase,@RequestBody KupovinaAutomobil k) {
+		return autoplacService.dodajAutomobilUKupovinu(idCar, idPurchase, k);
+	}
+}

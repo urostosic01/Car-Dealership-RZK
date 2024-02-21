@@ -1,0 +1,23 @@
+package com.pmf.rzk.proxy;
+
+import java.util.List;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.pmf.rzk.beans.Osiguranje;
+
+
+@FeignClient(name = "osiguranje-service")//, url = "localhost:8003")
+public interface OsiguranjeProxy {
+	
+	@GetMapping("/get-insurance/{idUser}")
+	public List<Osiguranje> getInsurance(@PathVariable Integer idUser);
+	
+	@PostMapping("/add-insurance/{idUser}/{idCarPurchase}/{yearLength}")
+	public Osiguranje addInsurance( @PathVariable Integer idUser, @PathVariable Integer idCarPurchase, 
+									@PathVariable Integer yearLength, @RequestBody Osiguranje o);
+}

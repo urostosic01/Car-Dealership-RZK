@@ -1,0 +1,11 @@
+package com.pmf.rzk.exception;
+
+public class ModelNijePronadjenError extends RuntimeException{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
+}

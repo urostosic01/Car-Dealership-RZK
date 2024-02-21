@@ -1,0 +1,8 @@
+package com.pmf.rzk.config;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ApiGatewayConfiguration {
+
+}

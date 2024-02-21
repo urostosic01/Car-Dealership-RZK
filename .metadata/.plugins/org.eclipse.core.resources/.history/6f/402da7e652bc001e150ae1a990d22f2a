@@ -1,0 +1,17 @@
+package com.pmf.rzk.beans;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+public class BankovniRacun {
+	private int brojRacuna;
+
+	private int stanje;
+
+	private String tipRacuna;
+
+	//bi-directional many-to-one association to Clan
+	@JsonIgnore
+	@ManyToOne
+	private Clan clan;
+}
