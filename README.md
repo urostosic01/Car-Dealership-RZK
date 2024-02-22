@@ -63,6 +63,19 @@ Kreiran za potrebe rada sa lokalnom bazom i generisanje modela.
 Instanca Eureka Naming Servera koji čuva informacije o svim dostupnim mikroservisima, njihovim portovima i IP adresama. Takođe obezbeđuje load balancing.
 ### API-gateway
 Obezbeđuje centralizovanu komunikaciju između klijenta i dostupnih mikroservisa. 
+
+### Docker 
+Linkovi ka servisima na Docker Hub:
+<ul>
+  <li>https://hub.docker.com/repository/docker/urostosic01/autoplac-radnja-service/general</li>
+  <li>https://hub.docker.com/repository/docker/urostosic01/clan-service/general</li>
+  <li>https://hub.docker.com/repository/docker/urostosic01/banka-service/general</li>
+  <li>https://hub.docker.com/repository/docker/urostosic01/autoplac-service/general</li>
+  <li>https://hub.docker.com/repository/docker/urostosic01/osiguranje-service/general</li>
+  <li>https://hub.docker.com/repository/docker/urostosic01/naming-server/general</li>
+  <li>https://hub.docker.com/repository/docker/urostosic01/api-gateway/general</li>
+</ul>
+
 ### Šema baze podataka 
 <p align="center">
   <img src="https://github.com/urostosic01/Car-Dealership-RZK/blob/main/RZK_db.png" alt="db_shema">
